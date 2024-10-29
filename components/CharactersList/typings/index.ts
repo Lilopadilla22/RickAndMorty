@@ -21,3 +21,10 @@ export interface Location {
 export interface CharactersResponse {
   results: Character[];
 }
+
+export interface CharacterListProps {
+  characters: Character[]; 
+  loading: boolean;
+  onNextPage: () => void
+  handlePrePage: () => void
+}
