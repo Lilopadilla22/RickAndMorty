@@ -4,8 +4,9 @@ import { CharacterListProps } from "../typings"
 import LoadingIndicator from "./LoadingIndicator"
 import { Card } from "@/components/Card"
 
-const CharacterListView = ({ characters, loading, onNextPage, handlePrePage }: CharacterListProps) => (
+const CharacterListView = ({ characters, loading, onNextPage, handlePrePage, state }: CharacterListProps) =>(
   <View style={{ flex: 1, width: '100%', justifyContent: 'center', alignItems: 'center' }}>
+    <Text style={style.title}>RICK AND MORTY APP</Text>
     <FlatList
       data={characters}
       renderItem={({ item }) => <Card {...item} />}
@@ -15,13 +16,17 @@ const CharacterListView = ({ characters, loading, onNextPage, handlePrePage }: C
       contentContainerStyle={{ flexGrow: 1 }}
     />
     <View style={style.containerButtons}>
-      <TouchableOpacity onPress={handlePrePage} style={style.containerButton}>
-        <Text style={style.buttonText}> Página Anterior </Text>
-      </TouchableOpacity>
+      {state.pages > 1 && (
+        <TouchableOpacity onPress={handlePrePage} style={style.containerButton}>
+          <Text style={style.buttonText}>Página Anterior</Text>
+        </TouchableOpacity>
+      )}
 
-      <TouchableOpacity onPress={onNextPage} style={style.containerButton}>
-        <Text style={style.buttonText}> Siguiente página </Text>
-      </TouchableOpacity>
+      {state.pages < state.totalPages && (
+        <TouchableOpacity onPress={onNextPage} style={style.containerButton}>
+          <Text style={style.buttonText}>Siguiente Página</Text>
+        </TouchableOpacity>
+      )}
     </View>
   </View>
 )
@@ -29,6 +34,11 @@ const CharacterListView = ({ characters, loading, onNextPage, handlePrePage }: C
 export default CharacterListView;
 
 const style = StyleSheet.create({
+  title: {
+    margin: 10,
+    fontSize: 20,
+    fontWeight: '600'
+  },
   containerButtons: {
     flexDirection: 'row',
     width: '100%',

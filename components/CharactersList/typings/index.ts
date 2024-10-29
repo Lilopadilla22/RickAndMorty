@@ -22,9 +22,18 @@ export interface CharactersResponse {
   results: Character[];
 }
 
+export interface State {
+  loading: boolean;
+  pages: number;
+  error: boolean;
+  characters: Character[];
+  totalPages: number;
+}
+
 export interface CharacterListProps {
   characters: Character[]; 
   loading: boolean;
   onNextPage: () => void
   handlePrePage: () => void
+  state: State
 }

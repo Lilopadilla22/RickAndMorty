@@ -8,8 +8,9 @@ export const useCharacters = () => {
     pages: 1,
     error: false,
     status: '',
-    characters: []
-  } as State)
+    characters: [],
+    totalPages: 1,
+  } as unknown as State)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,10 @@ export const useCharacters = () => {
         const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${state.pages}`);
         const result = await response.data.results
         dispatch({ type: 'setCharacters', arg: { characters: result } })
+
+        if (response.data.info.pages) {
+          dispatch({ type: 'setTotalPages', arg: { totalPages: response.data.info.pages } });
+        }
       } catch (error) {
         dispatch({ type: 'error' })
       }
@@ -33,11 +38,10 @@ export const useCharacters = () => {
   }
 
   const handlePrePage = () => {
-    if(state.pages >= 2) {
+    if(state.pages > 1) {
       const nextPage = state.pages - 1;
     dispatch({ type: 'nextPage', arg: { pages: nextPage } })
-    }
-    
+    } 
   }
 
   return { state, handleNextPage, handlePrePage }
