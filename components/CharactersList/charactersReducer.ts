@@ -6,13 +6,15 @@ export type ActionType =
   | { type: 'nextPage'; arg: { pages: number } }
   | { type: 'error' }
   | { type: 'setCharacters'; arg: { characters: Character[] } }
+  | { type: 'setTotalPages'; arg: {totalPages: number}}
 
 export type State = {
   loading: boolean;
   status: 'Alive' | 'Dead' | 'unknown' | '';
   pages: number;
   error: boolean;
-  characters: Character[]
+  characters: Character[];
+  totalPages: number
 };
 
 export const charactersReducer = (state: State, action: ActionType): State => {
@@ -27,6 +29,8 @@ export const charactersReducer = (state: State, action: ActionType): State => {
       return { ...state, error: true, loading: false }
     case 'setCharacters':
       return { ...state, characters: action.arg.characters, error: false, loading: false }
+      case 'setTotalPages':
+    return {...state, totalPages: action.arg.totalPages}
     default:
       return state
   }

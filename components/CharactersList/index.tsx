@@ -18,6 +18,7 @@ export const CharactersList = () => {
         loading={state.loading}
         onNextPage={handleNextPage}
         handlePrePage={handlePrePage}
+        state={state}
       />
     </View>
   );
